@@ -36,7 +36,12 @@
 			</table>
 		</center>
 	</div>
-	
+	<div id="requestbox">
+	<table name="requesttable">
+		<tr name="requestrow">
+		</tr>
+	</table>
+	</div>
 	<script>
 		
 		var id;
@@ -91,6 +96,45 @@
 				}
 				
             };
+			get_request_details();
+		}
+		
+		function get_request_details()
+		{
+			var requestbox=document.getElementsByName("requestbox")[0];
+			var requesttable=document.getElementsByName("requesttable")[0];
+			var requestrow=document.getElementsByName("requestrow")[0];
+			var source = new EventSource('./RequestTeller?id='+id); 
+			 source.onmessage=function(event)
+            {
+				console.log("you got request!!! "+event.data+" end");
+				requesttable.innerHTML="<tr name='requestrow'></tr>";
+				let requested=event.data.split("$")[1].split(",");
+				let names=event.data.split("$")[0].split(",");
+				for(i=0;i<requested.length-1;i++)
+				{
+					let newrow=requestrow.cloneNode(true);
+					newrow.innerHTML="<td>"+names[i]+"</td><td><button style='background-color:green;' onlick='accept("+requested[i]+")'>Accept</button></td>";
+					requesttable.appendChild(newrow);
+				}
+				//confirm("You got request from "+);
+            };
+		}
+		
+		function challenge(id2)
+		{
+			  var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() 
+				{
+				  if (this.readyState == 4 && this.status == 200) 
+				  {
+					//id = this.responseText;
+					alert("challenge request sent!!!");
+				  }
+				};
+				xhttp.open("GET", "./getid?id1="+id+"&id2="+id2+"&t=1", false);
+				xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xhttp.send();
 		}
 	</script>
 </body>

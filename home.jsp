@@ -55,7 +55,7 @@
 					}
 				  
 				};
-				xhttp.open("GET", "./getid?name="+name, false);
+				xhttp.open("GET", "./getid?name="+name+"&t=0", false);
 				xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 				xhttp.send();
 			}
