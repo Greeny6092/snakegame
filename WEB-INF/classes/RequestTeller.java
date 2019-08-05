@@ -22,8 +22,16 @@ public class RequestTeller extends HttpServlet
 			requestedusers+=r.u.name+",";
 		}
 		PrintWriter out=res.getWriter();
-		out.write("event: live_users \n\n"); 
-        out.write("data:"+requestedusers+"$"+ids+"  \n\n");
+		if(u.status!=1)
+		{
+			out.write("event:live_users\n"); 
+			out.write("data:"+requestedusers+"$"+ids+"  \n\n");
+		}
+		else if(u.status==1)
+		{
+			out.write("event:gamestartflag\n"); 
+			out.write("data: "+u.status+","+u.cur_gameboard_id+"\n\n");
+		}
 	}
 	
 }

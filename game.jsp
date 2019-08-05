@@ -46,6 +46,7 @@
 		
 		var id;
 		var gamestartflag=0;
+		var gameboard_id;
 		function createboard()
 		{
 			id=sessionStorage.getItem('id');
@@ -90,7 +91,7 @@
 						liveusers.appendChild(node);
 						if(gamestartflag==1)
 						{
-							liveusers.style.display=none;
+							liveusers.style.display="none";
 						}
 					}
 				}
@@ -105,20 +106,33 @@
 			var requesttable=document.getElementsByName("requesttable")[0];
 			var requestrow=document.getElementsByName("requestrow")[0];
 			var source = new EventSource('./RequestTeller?id='+id); 
-			 source.onmessage=function(event)
+			source.addEventListener("live_users",function(event)
+			{
+					//alert("got request");
+					console.log("you got request!!! "+event.data+" end");
+					requesttable.innerHTML="<tr name='requestrow'></tr>";
+					let requested=event.data.split("$")[1].split(",");
+					let names=event.data.split("$")[0].split(",");
+					for(i=0;i<requested.length-1;i++)
+					{
+						let newrow=requestrow.cloneNode(true);
+						newrow.innerHTML="<td>"+names[i]+"</td><td><button style='background-color:green;' onclick='accept("+requested[i]+",1)'>Accept</button></td><td><button style='background-color:red;' onclick='accept("+requested[i]+",0)'>Decline</button></td>";
+						requesttable.appendChild(newrow);
+					}
+					//confirm("You got request from "+);
+			})
+			
+			source.addEventListener("gamestartflag",function(event)
             {
-				console.log("you got request!!! "+event.data+" end");
-				requesttable.innerHTML="<tr name='requestrow'></tr>";
-				let requested=event.data.split("$")[1].split(",");
-				let names=event.data.split("$")[0].split(",");
-				for(i=0;i<requested.length-1;i++)
-				{
-					let newrow=requestrow.cloneNode(true);
-					newrow.innerHTML="<td>"+names[i]+"</td><td><button style='background-color:green;' onlick='accept("+requested[i]+")'>Accept</button></td>";
-					requesttable.appendChild(newrow);
-				}
-				//confirm("You got request from "+);
-            };
+					gamestartflag=event.data.split(",")[0];
+					if(gamestartflag==1)
+					{
+						document.getElementById("requestbox").style.display="none";
+						listentogameboard();
+					}
+					gameboard_id=event.data.split(",")[1];
+					console.log("game board id is "+gameboard_id+"gameflag is "+gamestartflag);
+            })
 		}
 		
 		function challenge(id2)
@@ -135,6 +149,28 @@
 				xhttp.open("GET", "./getid?id1="+id+"&id2="+id2+"&t=1", false);
 				xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 				xhttp.send();
+		}
+		
+		function accept(u2,accept)
+		{
+				//alert("Entered");
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() 
+				{
+				  if (this.readyState == 4 && this.status == 200) 
+				  {
+					//id = this.responseText;
+					console.log("accepted!!!");
+				  }
+				};
+				xhttp.open("GET", "./getid?u1="+id+"&u2="+u2+"&t=2&accept="+accept, false);
+				xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xhttp.send();
+		}
+		
+		function listentogameboard()
+		{
+			var source = new EventSource('./RequestTeller?id='+id); 
 		}
 	</script>
 </body>

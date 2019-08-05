@@ -8,7 +8,6 @@ public class game extends HttpServlet
 {
 	static public ArrayList<user> users=new ArrayList<user>();
 	static public ArrayList<gameboard> gameboards=new ArrayList<gameboard>();
-	
 	static user getUserById(int id)
 	{
 		for(user u:users)

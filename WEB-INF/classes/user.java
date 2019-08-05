@@ -6,7 +6,7 @@ import java.util.*;
 
 public class user extends HttpServlet
 {
-	int id,points,status;
+	int id,points,status,cur_gameboard_id;
 	String name=new String();
 	ArrayList<request> requests=new ArrayList<request>();
 	public user(int id,String name)
@@ -24,6 +24,17 @@ public class user extends HttpServlet
 		u.requests.add(new request(this));
 	}
 	
+	void removeRequest(user u)
+	{
+		Iterator<request> i=requests.iterator();
+		while(i.hasNext())
+		{
+			if(i.next().u.id==u.id)
+			{
+				i.remove();
+			}
+		}
+	}
 	public void doGet(HttpServletRequest req,HttpServletResponse res)throws IOException,ServletException
 	{	
 	
