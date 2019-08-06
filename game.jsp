@@ -166,22 +166,23 @@
 				var rows=document.getElementsByName("row");
 				console.log("got game board status !!! "+event.data+" length "+event.data.length);
 				let data=event.data;
-				for(i=0;i<data.length;i++)
+				for(i=0;i<data.length-1;i++)
 				{
 					if(data[i]==0)
 					{
-						rows[0].childNodes[i%12].setAttribute("style","background-color:red");
+						console.log("i is "+i+" i/12 is "+parseInt(1/12)+" i%12 is "+(i%12));
+						rows[parseInt(i/12)].childNodes[i%12].setAttribute("style","background-color:red");
 						console.log(rows[0].childNodes[0].nodeType);
 					}
 					else if(data[i]==1)
 					{
-						//rows[i/12].childNodes[i%12].style.background-color="blue";
-						rows[0].childNodes[i%12].setAttribute("style","background-color:blue");
+						
+						rows[parseInt(i/12)].childNodes[i%12].setAttribute("style","background-color:blue");
 					}
 					else if(data[i]==2)
 					{
-						//rows[i/12].childNodes[i%12].style.background-color="white";
-						//rows[i/12].childNodes[i%12].setAttribute("style","background-color:white");
+						rows[parseInt(i/12)].childNodes[i%12].setAttribute("style","background-color:white");
+						
 					}
 				}
             })			
