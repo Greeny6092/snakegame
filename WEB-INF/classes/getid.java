@@ -44,7 +44,7 @@ public class getid extends HttpServlet
 
 				gameboard g=new gameboard(game.getUserById(u1),game.getUserById(u2));
 				game.gameboards.add(g);
-				gameboard.gameboard_count++;
+				//gameboard.gameboard_count++;
 				g.u1.status=1;
 				g.u2.status=1;
 				g.init();

@@ -19,20 +19,7 @@
 	<div>
 		<center>
 			<table border="2" name="gameboard">
-				<tr name="row">
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
+				<tr name="row"><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
 			</table>
 		</center>
 	</div>
@@ -124,14 +111,16 @@
 			
 			source.addEventListener("gamestartflag",function(event)
             {
+				console.log(event.data);
 					gamestartflag=event.data.split(",")[0];
 					if(gamestartflag==1)
 					{
 						document.getElementById("requestbox").style.display="none";
+						gameboard_id=event.data.split(",")[1];
 						listentogameboard();
 					}
-					gameboard_id=event.data.split(",")[1];
 					console.log("game board id is "+gameboard_id+"gameflag is "+gamestartflag);
+					
             })
 		}
 		
@@ -170,7 +159,32 @@
 		
 		function listentogameboard()
 		{
-			var source = new EventSource('./RequestTeller?id='+id); 
+			var source = new EventSource('./GameBoardTeller?gid='+gameboard_id);
+			
+			source.addEventListener("boardstatus",function(event)
+            {
+				var rows=document.getElementsByName("row");
+				console.log("got game board status !!! "+event.data+" length "+event.data.length);
+				let data=event.data;
+				for(i=0;i<data.length;i++)
+				{
+					if(data[i]==0)
+					{
+						rows[0].childNodes[i%12].setAttribute("style","background-color:red");
+						console.log(rows[0].childNodes[0].nodeType);
+					}
+					else if(data[i]==1)
+					{
+						//rows[i/12].childNodes[i%12].style.background-color="blue";
+						rows[0].childNodes[i%12].setAttribute("style","background-color:blue");
+					}
+					else if(data[i]==2)
+					{
+						//rows[i/12].childNodes[i%12].style.background-color="white";
+						//rows[i/12].childNodes[i%12].setAttribute("style","background-color:white");
+					}
+				}
+            })			
 		}
 	</script>
 </body>

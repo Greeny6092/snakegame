@@ -54,6 +54,15 @@
 	<url-pattern>/RequestTeller</url-pattern>
 </servlet-mapping>
 
+<servlet>
+	<servlet-name>GameBoardTeller</servlet-name>	
+	<servlet-class>GameBoardTeller</servlet-class>	
+</servlet>
+<servlet-mapping>
+	<servlet-name>GameBoardTeller</servlet-name>	
+	<url-pattern>/GameBoardTeller</url-pattern>
+</servlet-mapping>
+
 <welcome-file-list>
  <welcome-file>home.jsp</welcome-file>
 </welcome-file-list>

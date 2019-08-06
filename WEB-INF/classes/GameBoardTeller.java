@@ -23,6 +23,7 @@ public class GameBoardTeller extends HttpServlet
 		PrintWriter out=res.getWriter();
 		out.write("event:boardstatus\n"); 
 		out.write("data:"+output+" \n\n");
+		//out.write("data:here comes the status \n\n");
 	}
 	
 }

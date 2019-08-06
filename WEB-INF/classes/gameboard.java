@@ -10,7 +10,7 @@ public class gameboard extends HttpServlet
 	user u2;
 	int status;
 	int gameboard_id;
-	static int gameboard_count=1;
+	static int gameboard_count=0;
 	int matrix[][]=new int[10][12];
 	public void init()
 	{
@@ -20,11 +20,11 @@ public class gameboard extends HttpServlet
 			{
 				if(i==4&&j<3)
 				{
-					matrix[i][j]=1;
+					matrix[i][j]=0;
 				}
 				else if(i==5&&j>8)
 				{
-					matrix[i][j]=0;
+					matrix[i][j]=1;
 				}
 				else
 				{
@@ -51,7 +51,8 @@ public class gameboard extends HttpServlet
 		this.u1=u1;
 		this.u2=u2;
 		status=1;
-		gameboard_id=gameboard_count;
+		gameboard_id=gameboard.gameboard_count;
+		gameboard.gameboard_count++;
 	}
 }
 
