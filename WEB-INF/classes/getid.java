@@ -56,6 +56,19 @@ public class getid extends HttpServlet
 				game.getUserById(u1).removeRequest(game.getUserById(u2));
 			}
 		}
+		else if(t==3)
+		{
+			int gid=Integer.parseInt(req.getParameter("gid"));
+			int move=Integer.parseInt(req.getParameter("move"));
+			int uid=Integer.parseInt(req.getParameter("uid"));
+			for(user u:game.users)
+			{
+				if(u.id==uid)
+				{
+					u.snake.moveQueue.add(move);
+				}
+			}
+		}
 	}
 }
 

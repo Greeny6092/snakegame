@@ -15,13 +15,15 @@ public class GameBoardTeller extends HttpServlet
 		{
 			if(g.gameboard_id==gid)
 			{
-				output=new String(g.getString());
+				output=new String();
+				output=g.u1.snake.stringizeBodyParts()+"$"+g.u2.snake.stringizeBodyParts();
 				break;
 			}
 		}
 		
 		PrintWriter out=res.getWriter();
 		out.write("event:boardstatus\n"); 
+		out.write("retry:100\n");
 		out.write("data:"+output+" \n\n");
 		//out.write("data:here comes the status \n\n");
 	}

@@ -9,6 +9,7 @@ public class user extends HttpServlet
 	int id,points,status,cur_gameboard_id;
 	String name=new String();
 	ArrayList<request> requests=new ArrayList<request>();
+	Snake snake;
 	public user(int id,String name)
 	{
 		this.name=name;
