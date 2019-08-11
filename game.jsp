@@ -290,6 +290,27 @@
 				xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 				xhttp.send();
 		}
+		
+		document.onkeydown=function(e)
+			{
+				//alert(e.keyCode);
+				let move=e.keyCode
+				if((move==37||move==38||move==39||move==40)&&(gamestartflag==1))
+				{
+					var xhttp = new XMLHttpRequest();
+					xhttp.onreadystatechange = function() 
+					{
+					  if (this.readyState == 4 && this.status == 200) 
+					  {
+						//id = this.responseText;
+						//console.log("move placed to moveQueue");
+					  }
+					};
+					xhttp.open("GET", "./getid?uid="+id+"&move="+e.keyCode+"&gid="+gameboard_id+"&t=3", false);
+					xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+					xhttp.send();
+				}
+			}
 	</script>
 </body>
 </html>
