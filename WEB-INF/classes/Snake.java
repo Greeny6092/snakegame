@@ -89,20 +89,20 @@ public class Snake extends HttpServlet
 					b.x=(b.x-1);
 					if(b.x<0)
 					{
-						b.x=9;
+						b.x=81;
 					}
 					break;
 				case 39:
-					b.y=(b.y+1)%12;
+					b.y=(b.y+1)%185;
 					break;
 				case 40:
-					b.x=(b.x+1)%10;
+					b.x=(b.x+1)%82;
 					break;
 				case 37:
 				b.y=(b.y-1);
 				if(b.y<0)
 				{
-					b.y=12;
+					b.y=185;
 				}
 					break;	
 			}

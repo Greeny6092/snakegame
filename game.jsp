@@ -4,9 +4,9 @@
 <style>
 	td
 	{
-		width:8vw;
-		height:9vh;
-		transition:background-color 1s;
+		width:3vw;
+		height:1vh;
+
 	}
 	button
 	{
@@ -49,7 +49,7 @@
 	<div>
 		<center>
 			<table border="0" name="gameboard" style="border:6px solid black">
-				<tr name="row"><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+				<tr name="row"><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
 			</table>
 		</center>
 	</div>
@@ -71,7 +71,8 @@
 			//alert("id is "+id);
 			var gameboard=document.getElementsByName("gameboard")[0];
 			var row=document.getElementsByName("row")[0];
-			for(i=0;i<9;i++)
+			//alert(row.childNodes.length);
+			for(i=0;i<80;i++)
 			{
 				let newrow=row.cloneNode(true);
 				gameboard.appendChild(newrow);
@@ -192,11 +193,12 @@
 		function listentogameboard()
 		{
 			var source = new EventSource('./GameBoardTeller?gid='+gameboard_id);
-			
+			var blue=null,red=null;
 			source.addEventListener("boardstatus",function(event)
             {
 				var rows=document.getElementsByName("row");
-				console.log("got game board status !!! "+event.data+" length "+event.data.length);
+				
+				//console.log("got game board status !!! "+event.data+" length "+event.data.length);
 				let data=event.data.split("$");
 				/*for(i=0;i<data.length-1;i++)
 				{
@@ -217,18 +219,37 @@
 						
 					}
 				}*/
-				clearBoard();
-				let blue=data[0].split(",");
+				//clearBoard();
+				
+				if(blue!=null)
+				{
+					console.log("clearing");
+					for(i=0;i<blue.length-1;i+=2)
+					{
+						rows[parseInt(blue[i])].childNodes[parseInt(blue[i+1])].setAttribute("style","background-color:white");
+					}
+				}
+				blue=data[0].split(",");
 				for(i=0;i<blue.length-1;i+=2)
 				{
 					rows[parseInt(blue[i])].childNodes[parseInt(blue[i+1])].setAttribute("style","background-color:blue");
 				}
 				
-				let red=data[1].split(",");
+
+				if(red!=null)
+				{
+					console.log("clearing");
+					for(i=0;i<red.length-1;i+=2)
+					{
+						rows[parseInt(red[i])].childNodes[parseInt(red[i+1])].setAttribute("style","background-color:white");
+					}
+				}
+				red=data[1].split(",");
 				for(i=0;i<red.length-1;i+=2)
 				{
 					rows[parseInt(red[i])].childNodes[parseInt(red[i+1])].setAttribute("style","background-color:red");
 				}
+
 				document.getElementsByName("input")[0].value="";
 				document.getElementsByName("input")[0].focus();
             })			
@@ -238,16 +259,16 @@
 		{
 			let table=document.getElementsByName("gameboard")[0];
 			//let innertable=document.getElementsByName("gameboard")[0].childNodes[0].cloneNode(true);
-			table.innerHTML="<tr name='row'><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+			table.innerHTML="<tr name='row'><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
 			//createboard();
 			//table.appendChild(innertable);
-			var gameboard=document.getElementsByName("gameboard")[0];
-			var row=document.getElementsByName("row")[0];
-			for(i=0;i<9;i++)
+			//var gameboard=document.getElementsByName("gameboard")[0];
+			//var row=document.getElementsByName("row")[0];
+			for(i=0;i<80;i++)
 			{
 				//let newrow=row.cloneNode(false);
 				//gameboard.appendChild(newrow);
-				table.innerHTML+="<tr name='row'><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+				table.innerHTML+="<tr name='row'><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
 			}
 		}
 		
