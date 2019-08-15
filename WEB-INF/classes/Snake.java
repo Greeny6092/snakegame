@@ -16,6 +16,50 @@ public class Snake extends HttpServlet
 		moveQueue.add(initialdir);
 	}
 	
+	public void addNewBodyPart()
+	{
+		int cur_move=(int)(moveQueue.peek());
+		BodyParts last=bodyparts.get(bodyparts.size()-1);
+		BodyParts beforelast=bodyparts.get(bodyparts.size()-2);
+		int newX,newY;
+		if(last.x==beforelast.x)
+		{
+			newX=last.x;
+			if(last.y==38)
+			{
+				newY=(last.y+1)%71;
+			}
+			else
+			{
+				newY=(last.y-1);
+				if(newY<0)
+				{
+					newY=70;
+				}
+			}
+			BodyParts newPart=new BodyParts(newX,newY);
+			bodyparts.add(newPart);
+		}
+		else if(last.y==beforelast.y)
+		{
+			newY=last.y;
+			if(last.x==37)
+			{
+				newX=(last.x+1)%185;
+			}
+			else
+			{
+				newX=(last.x-1);
+				if(newX<0)
+				{
+					newX=184;
+				}
+			}
+			BodyParts newPart=new BodyParts(newX,newY);
+			bodyparts.add(newPart);
+		}
+	}
+	
 	public void setPosition(int playerno)
 	{
 		BodyParts b;
@@ -124,6 +168,23 @@ public class Snake extends HttpServlet
 		
 		return output;
 	}
+	
+	public int getLast()
+	{
+		int i,size;
+		Iterator it=moveQueue.iterator();
+		i=0;
+		size=moveQueue.size();
+		size--;
+		while(i!=size)
+		{
+			it.next();
+			i++;
+		}
+		
+		return (int)it.next();
+	}
+	
 	class BodyParts
 	{
 		int x,y;

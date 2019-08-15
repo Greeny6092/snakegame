@@ -220,6 +220,11 @@
 					}
 				}*/
 				//clearBoard();
+				if(data.length>2)
+				{
+					let xy=data[2].split(",");
+					rows[parseInt(xy[0])].childNodes[parseInt(xy[1])].setAttribute("style","background-color:yellow");
+				}
 				
 				if(blue!=null)
 				{

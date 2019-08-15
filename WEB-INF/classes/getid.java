@@ -65,7 +65,11 @@ public class getid extends HttpServlet
 			{
 				if(u.id==uid)
 				{
-					u.snake.moveQueue.add(move);
+					int diff=(u.snake.getLast()-move);
+					if(diff!=2&&diff!=-2)
+					{
+						u.snake.moveQueue.add(move);
+					}
 				}
 			}
 		}
